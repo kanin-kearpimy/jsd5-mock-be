@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ValidationError
 import uuid
+import json
 
 app = FastAPI()
 
@@ -96,9 +97,10 @@ def create(member: Member):
 
 @app.put("/members")
 def update(member: Member):
+    global data
     for index in range(len(data)):
         if data[index]["id"] == str(member.id):
-            data[index] = member.model_dump_json()
+            data[index] = json.loads(member.model_dump_json())
             return {"message": "updated"}
 
     return {"message": "ID not found."}
