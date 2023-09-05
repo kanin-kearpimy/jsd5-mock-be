@@ -89,7 +89,7 @@ def get_by_id(member_id: str):
 @app.post("/members")
 def create(member: Member):
     try:
-        data.append(member)
+        data.append(json.loads(member.model_dump_json()))
         return {"message": "created"}
     except ValidationError as err:
         return {"error": str(err)}
