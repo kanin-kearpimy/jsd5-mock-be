@@ -98,7 +98,7 @@ def create(member: Member):
 def update(member: Member):
     for index in range(len(data)):
         if data[index]["id"] == str(member.id):
-            data[index] = member
+            data[index] = member.model_dump_json()
             return {"message": "updated"}
 
     return {"message": "ID not found."}
