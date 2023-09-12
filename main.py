@@ -82,4 +82,4 @@ def delete(member_id: str):
     global data
     new_data = filter(lambda member: member["id"] != member_id, data)
     data = list(new_data)
-    return {"message": "deleted {member_id}"}
+    return {"message": "deleted {member_id}".format(member_id=member_id)}
