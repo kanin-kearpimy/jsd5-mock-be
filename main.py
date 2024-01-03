@@ -18,19 +18,19 @@ app.add_middleware(
 
 data = [
     {
-        "id": "cc9754c4-f619-4921-bf7e-8a4fc9714e7f",
+        "id": uuid.uuid4(),
         "name": "mock",
         "lastname": "mocklastname",
         "position": "Manager",
     },
     {
-        "id": "66a3f853-5c09-4412-a380-3cc1ebf08c9c",
+        "id": uuid.uuid4(),
         "name": "employee 1",
         "lastname": "em",
         "position": "Engineer",
     },
     {
-        "id": "64715e05-b45b-4aba-b6d2-d7a4f61ccf0a",
+        "id": uuid.uuid4(),
         "name": "employee 2",
         "lastname": "lord",
         "position": "Designer",
@@ -55,6 +55,17 @@ def root():
 @app.get("/members")
 def get():
     return data
+
+
+@app.get("/members/{member_id}")
+def get_by_id(member_id: uuid.UUID):
+    global data
+    new_data = filter(lambda member: member["id"] == member_id, data)
+    one_data = list(new_data)
+    if len(one_data) == 0:
+        return {"message": "Not found"}
+
+    return one_data[0]
 
 
 @app.post("/members")
